@@ -23,7 +23,9 @@ client.once(Events.ClientReady, (readyClient) => {
 });
 
 client.commands = new Collection();
-
+/**
+ * Dynamically (Automatically) Register Command Files instead of manually
+ */
 const commands = [];
 
 const foldersPath = path.join(__dirname, "commands");
