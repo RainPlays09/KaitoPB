@@ -19,7 +19,7 @@ const clientId = process.env.CLIENT_ID;
 const guildId = process.env.GUILD_ID;
 
 client.once(Events.ClientReady, (readyClient) => {
-  console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+  console.log(`[CLIENT] Ready! Logged in as ${readyClient.user.tag}`);
 });
 
 client.commands = new Collection();
@@ -54,14 +54,14 @@ const rest = new REST().setToken(token);
 (async () => {
   try {
     console.log(
-      `Started refreshing ${commands.length} application (/) commands.`,
+      `[COMMAND] Started refreshing ${commands.length} application (/) commands.`,
     );
     const data = await rest.put(
       Routes.applicationGuildCommands(clientId, guildId),
       { body: commands },
     );
     console.log(
-      `Successfully reloaded ${data.length} application (/) commands.`,
+      `[COMMAND] Successfully reloaded ${data.length} application (/) commands.`,
     );
   } catch (error) {
     console.error(error);
@@ -72,7 +72,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
   const command = interaction.client.commands.get(interaction.commandName);
   if (!command) {
-    console.error(`No command matching ${interaction.commandName} was found.`);
+    console.error(
+      `[COMMAND] No command matching ${interaction.commandName} was found.`,
+    );
     return;
   }
   try {
